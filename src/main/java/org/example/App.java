@@ -45,8 +45,8 @@ public class App {
                 }
                 int[] selectedGrades = selectFiveGrades(codes, grades);
                 System.out.println(Arrays.toString(selectedGrades));
-//                double avg = calculateAverage(selectedGrades);
-//                System.out.println(avg);
+                double avg = calculateAverage(selectedGrades);
+                System.out.println(avg);
 
             }
 
@@ -99,6 +99,13 @@ public class App {
 
         double avg = 0;
 
+        int total = 0;
+
+        for (int i = 0; i < selectedGrades.length; i++) {
+            total = selectedGrades[i] + total;
+        }
+
+        avg = (double) total / selectedGrades.length;
 
         return avg;
     }
