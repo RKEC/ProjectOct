@@ -8,19 +8,18 @@ import java.util.Scanner;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
         App app = new App();
         app.start();
     }
+
     private static void start() {
 
-        File file = new File("JC_Results.txt");
-        readFile(file);
+        File fileName = new File("JC_Results.txt");
+        readFile(fileName);
+
 
     }
 
@@ -36,20 +35,22 @@ public class App
             int[] grades = new int[8];
 
 
-            while( scanner.hasNext() ) {
+            while (scanner.hasNext()) {
 
                 studentID = scanner.next(); // reads in as String
 
-                for( int i=0; i<8; i++) {
-                        codes[i] = scanner.nextInt();
-                        grades[i] = scanner.nextInt();
+                for (int i = 0; i < 8; i++) {
+                    codes[i] = scanner.nextInt();
+                    grades[i] = scanner.nextInt();
                 }
-
-                int[] selectedGrades = selectFiveGrades( codes, grades );
+                int[] selectedGrades = selectFiveGrades(codes, grades);
                 System.out.println(Arrays.toString(selectedGrades));
+//                double avg = calculateAverage(selectedGrades);
+//                System.out.println(avg);
+
             }
-        }
-        catch  (IOException e) {
+
+        } catch (IOException e) {
             System.out.println("Error - Couldn't find file");
         }
 
@@ -58,30 +59,46 @@ public class App
 
     public static int[] selectFiveGrades(int[] codes, int[] grades) {
 
-        int[] bestGrades = new int[5];
-        int[] temp = new int[8];
+        ArrayList<Integer> bestGrades = new ArrayList<>(0);
+        int largestA = grades[0];
+        int largestB = -1;
 
-        for(int i = 0; i < codes.length; i++)
-        {
-            while(bestGrades.length <= 5) {
-                if (codes[i] < 3) {
-                    grades[i] = bestGrades[i];
-                } else {
-                    if(grades[i] > temp[i])
-                    {
-                        temp[i] = grades[i];
+        for (int i = 0; i < codes.length; i++) {
+
+            if (codes[i] <= 3) {
+                bestGrades.add(grades[i]);
+            } else if (codes[i] > 3) {
+
+
+                for (int j = 0; j < grades.length; j++) {
+
+                    if (grades[i] > largestA) {
+                        largestB = largestA;
+                        largestA = grades[i];
+                    } else if (grades[i] > largestB && largestA != grades[i]) {
+                        largestB = grades[i];
+
                     }
                 }
             }
         }
+        bestGrades.add(largestA);
+        bestGrades.add(largestB);
+        int[] result = new int[bestGrades.size()];
+
+        for (int j = 0; j < bestGrades.size(); j++) {
+            result[j] = bestGrades.get(j);
+        }
 
 
-
-        return bestGrades;
+        return result;
     }
 
-    private double calculateAverage(int[] selectedGrades) {
+    public static double calculateAverage(int[] selectedGrades) {
+
+
         double avg = 0;
+
 
         return avg;
     }
