@@ -16,13 +16,15 @@ public class App {
         app.start();
     }
 
-    private static void start() {
+    public void start() {
         File fileName = new File("JC_Results.txt");
         readFile(fileName);
+
     }
 
-    public static void readFile(File file) {
+    private void readFile(File file) {
         //declare
+
         int[] codes = new int[8];
         int[] grades = new int[8];
         String studentID;
@@ -38,24 +40,22 @@ public class App {
                     codes[i] = scanner.nextInt();
                     grades[i] = scanner.nextInt();
                 }
-                int[] selectedGrades = selectFiveGrades(codes, grades);
+
+                Student student = new Student(studentID, codes, grades);
+
+                int[] selectedGrades = selectFiveGrades(student.getCodes(), student.getGrades());
                 double avg = calculateAverage(selectedGrades);
 
-                print(studentID, avg);
+                print(student.getStudentID(), avg);
             }
         } catch (IOException e) {
             System.out.println("Error - Couldn't find file");
         }
     }
 
-    private static void print(String studentID, double avg) {
-        //prints details neatly in table form
-        System.out.printf("%s %6.2f\n" , studentID, avg);
-    }
-
-    public static int[] selectFiveGrades(int[] codes, int[] grades) {
+    private int[] selectFiveGrades(int[] codes, int[] grades) {
         //declare
-        ArrayList<Integer> bestGrades = new ArrayList<>(0);
+        ArrayList<Integer> bestGrades = new ArrayList<>();
         int largestA = grades[0];
         int largestB = -1;
 
@@ -89,14 +89,14 @@ public class App {
         return result;
     }
 
-    public static double calculateAverage(int[] selectedGrades) {
+    private double calculateAverage(int[] selectedGrades) {
         //declare
         double avg;
         int total = 0;
 
         //loop to add grades
-        for(int selectedGrade : selectedGrades) {
-            total = selectedGrade + total;
+        for (int selectedGrade : selectedGrades) {
+            total += selectedGrade;
         }
         //cal to get avg
         avg = (double) total / selectedGrades.length;
@@ -104,4 +104,8 @@ public class App {
         return avg;
     }
 
+    private void print(String studentID, double avg) {
+        //prints details neatly in table form
+        System.out.printf("%s %6.2f\n", studentID, avg);
+    }
 }
