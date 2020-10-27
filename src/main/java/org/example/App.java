@@ -22,12 +22,12 @@ public class App {
 
     }
 
-    private void readFile(File file) {
+    public void readFile(File file) {
         //declare
-
+        String studentID;
         int[] codes = new int[8];
         int[] grades = new int[8];
-        String studentID;
+
 
         try {
             Scanner scanner = new Scanner(new File(String.valueOf(file)));
@@ -53,7 +53,7 @@ public class App {
         }
     }
 
-    private int[] selectFiveGrades(int[] codes, int[] grades) {
+    public int[] selectFiveGrades(int[] codes, int[] grades) {
         //declare
         ArrayList<Integer> bestGrades = new ArrayList<>();
         int largestA = grades[0];
@@ -89,7 +89,7 @@ public class App {
         return result;
     }
 
-    private double calculateAverage(int[] selectedGrades) {
+    public double calculateAverage(int[] selectedGrades) {
         //declare
         double avg;
         int total = 0;
